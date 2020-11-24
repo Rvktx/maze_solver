@@ -38,13 +38,19 @@ class Maze:
             row = []
             for x in range(self.width):
                 if all(self.grid[y][x] == [0, 255, 0]):
-                    self.start = (x, y)
-                    row.append(False)
-                    print("Found starting position")
+                    if self.start is not None:
+                        raise Exception("More than one starting position found")
+                    else:
+                        self.start = (x, y)
+                        row.append(False)
+                        print("Found starting position")
                 elif all(self.grid[y][x] == [255, 0, 0]):
-                    self.target = (x, y)
-                    row.append(False)
-                    print("Found target position")
+                    if self.target is not None:
+                        raise Exception("More than one target position found")
+                    else:
+                        self.target = (x, y)
+                        row.append(False)
+                        print("Found target position")
                 elif all(self.grid[y][x] == [255, 255, 255]):
                     row.append(False)
                 else:
