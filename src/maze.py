@@ -1,4 +1,5 @@
 import imageio
+import time
 from node import Node
 from stack_frontier import StackFrontier
 from queue_frontier import QueueFrontier
@@ -95,6 +96,7 @@ class Maze:
         else:
             raise Exception(f"{mode} mode doesn't exist (yet)!")
 
+        time_start = time.time()
         start = Node(self.start, None, None)
         frontier.add(start)
 
@@ -104,7 +106,10 @@ class Maze:
 
             node = frontier.remove()
             if node.state == self.target:
-                print('Solution found!\nRetracing path...')
+                time_end = time.time()
+                time_duration = time_end - time_start
+                print(f'Solution found in {time_duration}s, explored {len(self.explored_nodes)} nodes'
+                      '\n' 'Retracing path')
                 cells = []
                 actions = []
 
@@ -124,18 +129,19 @@ class Maze:
                     child = Node(state, node, action)
                     frontier.add(child)
 
-    def solution_output(self, out_path):
+    def solution_output(self, out_path, show_explored=False):
         if self.solution is None:
             raise Exception("There is no solution to output. Did you run solve() method?")
 
         print("Creating image")
         path = self.solution[0]
         new_grid = self.grid
-
         for y in range(self.height):
             for x in range(self.width):
-                if path is not None and (x, y) in path:
-                    new_grid[y][x] = [255, 0, 0]
+                if path is not None and (x, y) in path and (x, y) != self.target:
+                    new_grid[y][x] = [0, 0, 255]
+                elif show_explored and (x, y) in self.explored_nodes and (x, y) != self.start:
+                    new_grid[y][x] = [255, 255, 0]
 
         print("Writing to file")
         imageio.imwrite(out_path, new_grid)

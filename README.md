@@ -45,8 +45,8 @@ $ python run.py /path/to/maze/image
 
 * More pathfinding algorithms such as Dijkstra algorithm and A*
 * Converting wider corridors into segments to improve compatibility with different images
-* Optional marking of explored segments to compare efficiency of different algorithms in your case
-* Optional time reporting again to compare efficiency of different algorithms in your case
+* Optional marking of explored segments to compare efficiency of different algorithms in your case - **DONE**
+* ~~Optional~~ time reporting, again to compare efficiency of different algorithms in your case - **DONE**
 
 ## License
 

@@ -13,9 +13,11 @@ if __name__ == '__main__':
                         help='Path of a maze image to solve')
     parser.add_argument('--out-path', '-o', type=str, required=False, default='out.png',
                         help='Output path')
+    parser.add_argument('--show-explored', type=bool, required=False, default=False,
+                        help='shows explored segments in exported image if set to True')
 
     # Parsing arguments and starting the program
     args = parser.parse_args()
     maze = Maze(args.path)
     maze.solve(args.algorithm)
-    maze.solution_output(args.out_path)
+    maze.solution_output(args.out_path, args.show_explored)
